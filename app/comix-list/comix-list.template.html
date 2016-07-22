@@ -15,12 +15,11 @@
 
             <ul class="comixes">
                 <li ng-repeat="comix in $ctrl.comixes | filter:$ctrl.query" class="thumbnail">
-                    <a href="#!/comixes/{{comix.id}}" class="thumb">
-                        <img ng-src="{{comix.imageUrl}}" alt="{{comix.name}}" />
+                    <a href="#!/comixes/{{comix.title}}" class="thumb">
+                        <img ng-src="{{comix.coverUrl}}" alt="{{comix.title}}" />
                     </a>
-                    <a href="#!/comixes/{{comix.id}}">{{comix.name}}</a>
-                    <p>{{comix.snippet}}</p>
-                </li>
+                    <a href="#!/comixes/{{comix.title}}">{{comix.title}}</a>
+                  </li>
             </ul>
 
 
