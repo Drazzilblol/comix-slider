@@ -10,7 +10,7 @@ config(['$locationProvider' ,'$routeProvider',
         when('/comixes', {
             template: '<comix-list></comix-list>'
         }).
-        when('/comix/:comixId', {
+        when('/comixes/:comixId', {
             template: '<slider></slider>'
         }).
         otherwise('/comixes');

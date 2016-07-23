@@ -19,10 +19,10 @@
 
             <ul class="comixes">
                 <li ng-repeat="comix in comixes | filter:query" class="thumbnail">
-                    <a href="#!/comixes/{{comix.title}}" class="thumb">
+                    <a href="#!/comixes/{{comix._id}}" class="thumb">
                         <img class="center" ng-src="{{comix.coverUrl}}" alt="{{comix.title}}"/>
                     </a>
-                    <a href="#!/comixes/{{comix.title}}">{{comix.title}}</a>
+                    <a href="#!/comixes/{{comix._id}}">{{comix.title}}</a>
                 </li>
             </ul>
 
