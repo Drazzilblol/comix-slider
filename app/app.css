@@ -13,8 +13,9 @@ h1 {
 
 .comixes li {
     clear: both;
-    height: 150px;
-    padding-top: 15px;
+    height: 180px;
+    padding-top:  18px;
+    text-align: center;
 }
 
 .thumb {

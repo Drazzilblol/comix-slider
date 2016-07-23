@@ -5,7 +5,11 @@
 
             <p>
                 Search:
-                <input ng-model="$ctrl.query"/>
+                <input ng-model="query"/>
+            </p>
+            <p>
+                <input type="text" name="input" ng-model="comixName">
+                <button ng-click="addComix(comixName)">Get new Comix</button>
             </p>
 
         </div>
@@ -14,12 +18,12 @@
         <div class="col-md-10">
 
             <ul class="comixes">
-                <li ng-repeat="comix in $ctrl.comixes | filter:$ctrl.query" class="thumbnail">
+                <li ng-repeat="comix in comixes | filter:query" class="thumbnail">
                     <a href="#!/comixes/{{comix.title}}" class="thumb">
-                        <img ng-src="{{comix.coverUrl}}" alt="{{comix.title}}" />
+                        <img class="center" ng-src="{{comix.coverUrl}}" alt="{{comix.title}}"/>
                     </a>
                     <a href="#!/comixes/{{comix.title}}">{{comix.title}}</a>
-                  </li>
+                </li>
             </ul>
 
 
