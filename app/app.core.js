@@ -3,5 +3,6 @@
 angular.module('app', [
     'ngRoute',
     'comixList',
-    //'slider'
+    'comixInfo',
+    'slider'
 ]);

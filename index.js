@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 
 
 var comixRoutes = require('./server/routes/comixRoutes');
+var numberRoutes = require('./server/routes/numberRoutes');
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/comix', function(err) {
@@ -48,6 +49,7 @@ app.use(function(req, res, next) {
 });
 
 app.use('/comix', comixRoutes);
+app.use('/number', numberRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

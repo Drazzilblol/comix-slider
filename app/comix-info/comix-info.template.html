@@ -1,0 +1,23 @@
+
+<div class="center">
+    <h1>{{comix.title}}</h1>
+    <div class="left">
+        <img ng-src="{{comix.coverUrl}}">
+    </div>
+
+    <div class="right">
+        <div class="ComList">
+
+            <div class="ComListLine" ng-repeat="number in comix.numbers" class="thumbnail">
+
+                <a href="#!/comixes/{{comix._id}}/{{number.id}}">{{number.name}}</a>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+</div>

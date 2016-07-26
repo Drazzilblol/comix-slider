@@ -11,6 +11,9 @@ config(['$locationProvider' ,'$routeProvider',
             template: '<comix-list></comix-list>'
         }).
         when('/comixes/:comixId', {
+            template: '<comix-info></comix-info>'
+        }).
+        when('/comixes/:comixId/:numberId', {
             template: '<slider></slider>'
         }).
         otherwise('/comixes');

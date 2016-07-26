@@ -8,4 +8,4 @@ var ComixSchema = new mongoose.Schema({
     numbers: Array
 });
 
-module.exports = mongoose.model('Comix', ComixSchema);
+module.exports = mongoose.model('Number', ComixSchema);

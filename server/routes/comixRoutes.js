@@ -30,17 +30,15 @@ router.post('/', function (req, res, next) {
     var comixUrl = req.body.comixUrl;
     console.log(comixUrl);
     jsdom.env(
-        "http://comics-online.ru/main/" + comixUrl + ".html",
+        comixUrl,
         ["http://code.jquery.com/jquery.js"],
         function (err, window) {
             var $ = window.$;
             var numbers = [];
-            var arr = $("#dle-content").find("div p a").filter(function (i, html) {
-                if(!$(html).prop("target").localeCompare("_blank") )return false;
-                return true;
-
-            })
+            var arr = $(".MagListLine").find("a")
             var length = arr.length;
+            console.log(length);
+
             arr.each(function (i, html) {
                 numbers.push({
                     id: length - i,
@@ -50,8 +48,8 @@ router.post('/', function (req, res, next) {
             });
 
             var com = {
-                title: $("#dle-content").find('div h2').text(),
-                coverUrl: $("#dle-content").find('div img').prop("src"),
+                title: $(".ops").find('div p strong').first().text(),
+                coverUrl: $(".ops").find('div img').last().prop("src"),
                 numbers: numbers
             };
             Comix.create(com, function (err, post) {
@@ -64,37 +62,10 @@ router.post('/', function (req, res, next) {
 
 /* GET /todos/id */
 router.get('/:id', function (req, res, next) {
-    jsdom.env(
-        "http://comics-online.ru/main/" + req.params.id + ".html",
-        ["http://code.jquery.com/jquery.js"],
-        function (err, window) {
-            var $ = window.$;
-            var numbers = [];
-            var arr = $("#dle-content").find("div p a").filter(function (i, html) {
-                if(!$(html).prop("target").localeCompare("_blank") )return false;
-                return true;
-
-            })
-            var length = arr.length;
-            arr.each(function (i, html) {
-                    numbers.push({
-                        id: length - i,
-                        name: $(html).text(),
-                        url: $(html).prop("href")
-                    })
-            });
-
-            var com = {
-                title: $("#dle-content").find('div h2').text(),
-                coverUrl: $("#dle-content").find('div img').prop("src"),
-                numbers: numbers
-            };
-            Comix.create(com, function (err, post) {
-                if (err) return next(err);
-                res.json(post);
-            });
-
-        });
+    Comix.findOne({'_id': req.params.id}, function (err, comix) {
+        if (err) return next(err);
+        res.json(comix);
+    });
 });
 
 /* PUT /todos/:id */
