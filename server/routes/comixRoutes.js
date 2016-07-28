@@ -2,12 +2,14 @@ var express = require('express');
 var router = express.Router();
 var jsdom = require('jsdom');
 var bodyParser = require('body-parser');
+var async = require("async");
 
 router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.urlencoded({extended: false}));
 
 var mongoose = require('mongoose');
 var Comix = require('../models/Comix.js');
+var ComixNumber = require('../models/ComixNumber.js');
 
 
 router.param(['id', 'page'], function (req, res, next, value) {
@@ -54,9 +56,54 @@ router.post('/', function (req, res, next) {
             };
             Comix.create(com, function (err, post) {
                 if (err) return next(err);
-                res.json(post);
-            });
 
+                async.map(numbers, function (n, callback) {
+                    jsdom.env(
+                        n.url,
+                        ["http://code.jquery.com/jquery.js"],
+                        function (err, window) {
+
+                            var $ = window.$;
+
+                            var pageCount = $('.C').last().find(' option:last-child').val();
+                            var firstPage = $(".ForRead").find("a img").prop("src");
+                            firstPage = firstPage.slice(0, firstPage.indexOf(".png") - 1);
+
+                            var pages = [];
+                            for (var i = 1; i <= pageCount; i++) {
+
+                                pages.push(firstPage + i + ".png")
+                            }
+
+                            var number = {
+                                comixId: post.id,
+                                numberName: n.name,
+                                pages: pages,
+                                id: n.id
+                            };
+
+
+                            callback(null, number);
+
+                        });
+
+
+                }, function (err, results) {
+                    // completion function
+                    if (!err) {
+                        // process all results in the array here
+                        console.log(results);
+                        ComixNumber.create(results, function (err, post) {
+                            if (err) return next(err);
+                        });
+
+                        res.json(post);
+                    } else {
+                        // handle error here
+                    }
+                });
+
+            });
         });
 });
 

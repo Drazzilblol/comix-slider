@@ -5,38 +5,35 @@ angular.module('slider').component('slider', {
     controller: ['$routeParams', '$scope', '$http',
         function SliderController($routeParams, $scope, $http) {
 
+            $('.rg-image-wrapper').focus();
 
-            $http.get('http://localhost:3000/number/' + $routeParams.numberId).then(function (res) {
+            $http.get('http://localhost:3000/number/' + $routeParams.comixId + "/" + $routeParams.numberId).then(function (res) {
                 $scope.number = res.data;
                 console.log(res.data)
             });
 
+            $scope.Index = 0;
 
-            $scope.addComix = function (comixName, numberName) {
-                var data = {
-                    'comixId': $routeParams.comixId,
-                    'comixName': comixName,
-                    'numberName': numberName
-                };
-                var config = {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                };
-                $http.post('http://localhost:3000/number', data, config).then(function (res) {
-                    $scope.number.push(res.data);
-                    console.log(res.data)
-                });
+            $scope.next = function () {
+                $('.rg-image-wrapper').focus();
+                if ($scope.Index < $scope.number.pages.length) {
+                    $scope.Index++;
+                }
             };
 
+            $scope.preview = function () {
+                $('.rg-image-wrapper').focus();
+                if ($scope.Index > 0) {
+                    $scope.Index--;
+                }
+            };
 
-            /*   $scope.comix = Number.get({comixId: $routeParams.comixId}, function(comix) {
-             $scope.setImage(comix.images[0]);
-             });
-
-             self.setImage = function setImage(imageUrl) {
-             self.mainImageUrl = imageUrl;
-             };*/
+            $scope.key = function ($event) {
+                if ($event.keyCode == 39)
+                    $scope.next()
+                else if ($event.keyCode == 37)
+                    $scope.preview()
+            };
         }
     ]
 });

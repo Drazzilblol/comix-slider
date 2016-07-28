@@ -1,23 +1,17 @@
-<div class="rg-image-wrapper">
-
+<h1>{{number.numberName}}</h1>
+<div tabindex="1" class="rg-image-wrapper" ng-keydown="key($event)">
     <div class="rg-image-nav">
-        <a href="#" class="rg-image-nav-prev">Previous Image</a>
-        <a href="#" class="rg-image-nav-next">Next Image</a>
+        <a class="rg-image-nav-prev" ng-click="preview()">>Previous Image</a>
+        <a class="rg-image-nav-next" ng-click="next()">>Next Image</a>
     </div>
 
     <div class="rg-image">
-
-        <img ng-src="http://animezis.ru/1/doctorstrange2015/009/1.png?st=-2-848L25-iuYUAgFDU9-g&e=1469444769">
+        <img ng-click="next()" ng-src="{{number.pages[Index]}}">
     </div>
-     <div class="rg-caption-wrapper">
+    <div class="rg-caption-wrapper">
         <div class="rg-caption" style="display:none;">
             <p></p>
         </div>
     </div>
+    <input ng-keydown="key($event)"/>
 </div>
-
-<p>
-    <input type="text" name="input" ng-model="comixName">
-    <input type="text" name="input" ng-model="numberName">
-    <button ng-click="addComix(comixName, numberName)">Get new number</button>
-</p>
